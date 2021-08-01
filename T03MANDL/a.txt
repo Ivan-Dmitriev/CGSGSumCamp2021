@@ -1,0 +1,27 @@
+VOID DrawMandelbrot( VOID )
+{
+  DOUBLE X0 = -2, X1 = 2, Y0 = -2, Y1 = 2, kt = 300;
+  INT n;
+  cmpl Z;
+  cmpl C;
+
+  for (INT ys = 0; ys < FRAME_H; ys++)
+    for (INT xs = 0; xs < FRAME_W; xs++)
+    {
+       C = cmpl(0.47 + 0.1 * sin(SyncTime * 3), 0.1 * sin(0.5 * SyncTime));
+       Z = cmpl(xs * (X1 - X0) / FRAME_W + X0, ys * (Y1 - Y0) / FRAME_H + Y0);
+       //n = MandelBrot(Z);
+       n = Julia(Z, C);
+       //PutPixel(xs, ys, tan(SyncTime + 15) * n, sin(SyncTime + 3.14) * (n / 8), sin(SyncTime + 4) * n * 8);
+       //PutPixel(xs, ys, sin(SyncTime) * 0.3 * n, n * 47, n * 0.3);
+       //FLOAT color = FLOAT(n) / 1024;
+
+       //PutPixel(xs, ys, color * 0.1 * 255, color / 3.0 * 255, color * 39.0 * 255);
+       if (n < 16)
+         PutPixel(xs, ys, n * 8, n * 8, n * 4 + 128);
+       else if (n >= 16 && n < 64)
+         PutPixel(xs, ys, 128 + n - 16 * sin(SyncTime), (128 + n - 16), 192 + n - 16);
+       else 
+         PutPixel(xs, ys, kt - n * sin(SyncTime), (128 + (kt - n) / 2), kt - n);
+    }
+}

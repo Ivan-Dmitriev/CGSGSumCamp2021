@@ -1,0 +1,69 @@
+      {
+        entry** ptr = &Start;
+
+        if (*ptr != nullptr)
+        {
+          while (*ptr != nullptr)
+          {
+            ptr = &(*ptr)->Next;
+          }
+          *ptr = new entry(NewD, nullptr);
+          length++;
+        }
+      }
+        entry** ptr = &Start;
+
+        while (*ptr != nullptr)
+        {
+          if (&(*ptr)->Next == nullptr)
+            break;
+          ptr = &(*ptr)->Next;
+        }
+
+        if (*ptr == nullptr )
+          return false;
+        entry* old = Start;
+        Type deleted = (*ptr)->Data;
+        ptr = &(*ptr)->Next;
+        delete ptr;
+        length--;
+        DelVal = deleted;
+
+
+        if (ptr->Next == nullptr)
+        {
+          entry* old = ptr;
+        
+          ptr->Next = nullptr;
+
+          Type deleted_ = old->Data;
+          delete old;
+          priv_length--;
+          DelVal = deleted_;
+        }
+
+
+      list & operator=( const list &list2 )
+      {
+        //this->Clear();
+        entry *ptr = list2.Start;
+
+        while (ptr != nullptr)
+        {
+          PushBack(ptr->Data);
+          ptr = ptr->Next;
+        }
+         
+        return *this;
+      }
+
+      list( const list &NewL )
+      {
+        entry *ptr = NewL.Start;
+
+        while (ptr != nullptr)
+        {
+          PushBack(ptr->Data);
+          ptr = ptr->Next;
+        }
+      } /* End of copy constructor */
